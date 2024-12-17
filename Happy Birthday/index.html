@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>生日快乐噢，北鼻！</title>
+    <style>
+* {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        body {
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background: linear-gradient(45deg, #ff9a9e, #fad0c4);
+            font-family: 'Comic Sans MS', cursive, sans-serif;
+            overflow: hidden;
+            position: relative;
+        }
+/* 表情包图片样式 */
+.swing-image {
+    width: 70px; /* 图片宽度，可以根据需要调整 */
+    height: 90px; /* 图片高度，可以根据需要调整 */
+    position: absolute; /* 相对标题定位 */
+    top: 100px; /* 距离标题顶部稍微偏移 */
+    right: 100px; /* 标题右下角 */
+    animation: swing 1.5s infinite ease-in-out; /* 添加动画效果 */
+    transform-origin: bottom center; /* 设置旋转中心 */
+<img src="bighead.png" alt="大头贴" class="swing-image" id="swing-image">>
+}
+
+/* 左右晃动动画 */
+@keyframes swing {
+    0%, 100% {
+        transform: rotate(0deg); /* 初始和结束状态为0度 */
+    }
+    25% {
+        transform: rotate(5deg); /* 向右旋转5度 */
+    }
+    75% {
+        transform: rotate(-5deg); /* 向左旋转5度 */
+    }
+}
+/* 加速晃动动画 */
+.swing-fast {
+    animation: swing 0.3s infinite ease-in-out; /* 速度加快 */
+}
+/* 左右两侧长图 */
+        .side-image {
+            position: absolute;
+            top: 0;
+            width: 32%;
+            height: 100%;
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-position: center;
+            z-index: 0; /* 最底层背景 */
+        }
+
+        .side-image.left {
+            left: 0;
+            background-image: url('./side1.png');
+        }
+
+        .side-image.right {
+            right: 0;
+            background-image: url('./side2.png');
+        }
+        canvas {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1; /* 烟花在背景层 */
+        }
+        .card {
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+            text-align: center;
+            padding: 40px;
+            max-width: 600px;
+            margin: auto; /* 水平居中 */
+            z-index: 2; /* 确保卡片在前景层 */
+position: relative; /* 保证卡片居中且不影响两侧图片 */
+        }
+        .title {
+            font-size: 3em;
+            color: #ff6f61;
+            margin-bottom: 30px;
+        }
+        .message {
+            font-size: 1.4em;
+            line-height: 2;
+            color: #555;
+            margin-bottom: 30px;
+        }
+        .button {
+            background: #ff6f61;
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 1.4em;
+            transition: 0.3s ease;
+        }
+        .button:hover {
+            background: #d0574e;
+        }
+        .warrior-and-cats {
+            display: flex;
+            align-items: center;
+            justify-content: space-evenly;
+            margin-top: 30px;
+        }
+        .warrior {
+            width: 100px;
+            height: 100px;
+            background: url('./warrior.png') no-repeat center/cover;
+        }
+        .cat {
+            width: 100px;
+            height: 100px;
+            background: url('./cat1.png') no-repeat center/cover;
+        }
+        .cat:nth-child(2) {
+            background: url('./cat2.png') no-repeat center/cover;
+        }
+        .cat:nth-child(3) {
+            background: url('./cat3.png') no-repeat center/cover;
+        }
+        #popup {
+            display: none;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: white; /* 弹窗背景改为白色 */
+    color: black; /* 弹窗文字颜色改为黑色 */
+    padding: 30px; /* 增加内边距，使整体更大 */
+    border-radius: 15px; /* 保持圆角效果 */
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3); /* 添加阴影，使弹窗更突出 */
+    font-size: 1.8em; /* 文字变大 */
+    z-index: 3; /* 确保在最上层显示 */
+    text-align: center; /* 文字居中 */
+    max-width: 90%; /* 弹窗最大宽度限制 */
+    width: 400px; /* 弹窗的固定宽度，可以调整 */
+opacity: 0;
+    transition: opacity 0.5s ease;
+        }
+#popup.show {
+    display: block;
+    opacity: 1;
+}
+        #popup img {
+            width: 150px; /* 图片宽度变大 */
+    height: 150px; /* 图片高度变大 */
+    display: block; /* 使图片独占一行 */
+    margin: 0 auto 20px; /* 居中图片并与文字分开 */
+        }
+    </style>
+</head>
+<body>
+<!-- 左边长图 -->
+    <div class="side-image left"></div>
+    <!-- 右边长图 -->
+    <div class="side-image right"></div>
+
+    <canvas id="fireworks"></canvas>
+    <div class="card">
+        <div class="title">🎂 生日快乐哦，北鼻！ 🎉
+<img src="bighead.png" alt="大头贴" class="swing-image" id="swing-image">
+</div>
+        <div class="message">
+            今天是没有流星也可以许愿的日子哦<br>
+            希望北鼻可以发大财，越来越可爱，越长越漂亮，好运常在!<br>
+           未来的路还有很长，我希望它对你而言是繁花似锦和平安顺遂的<br>
+            如果不行的话，你也不用害怕平凡，在这个世界中你仍然是唯一且独特的那一个，而我也会在你身边。<br>
+           于我而言，于爱你的人而已，你永远是最值得，最好的，你就是自己人生的主角。
+        见字如面，我想马上就见面，反正也快了哈哈哈，希望今天你的枕头是柔软的，被子是暖和的，可以睡个好觉！
+        </div>
+        <button class="button" onclick="triggerFireworks()">点我许个愿</button>
+        <div class="warrior-and-cats">
+            <div class="warrior"></div>
+            <div class="cat"></div>
+            <div class="cat"></div>
+            <div class="cat"></div>
+        </div>
+    </div>
+
+    <!-- 弹窗 -->
+    <div id="popup">
+        <img src="wish.png" alt="表情包">
+        <span>恭喜你呀，生日快乐哦，马克来祝大人许愿成功！🎉</span>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
+
